@@ -34,7 +34,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     cardName: ''
   });
 
-  if (!isOpen) return null;
 
   React.useEffect(() => {
     if (isAuthenticated && user) {
@@ -48,6 +47,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       setIsAuthModalOpen(true); // Automatically open auth modal
     }
   }, [isAuthenticated, user, isOpen]);
+
+  if (!isOpen) return null;
 
   const handleAuthSuccess = () => {
     setIsAuthModalOpen(false);

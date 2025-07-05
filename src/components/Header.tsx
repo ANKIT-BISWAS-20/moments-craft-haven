@@ -50,7 +50,7 @@ const Header = () => {
               <a href="#shop" className="story-link text-tertiary hover:text-tertiary/80 font-medium">Shop</a>
               <a href="#about" className="story-link text-tertiary hover:text-tertiary/80 font-medium">About Us</a>
               <a href="#contact" className="story-link text-tertiary hover:text-tertiary/80 font-medium">Contact</a>
-              <a href="/orders" className="story-link text-tertiary hover:text-tertiary/80 font-medium">My Orders</a>
+              {/* <a href="/orders" className="story-link text-tertiary hover:text-tertiary/80 font-medium">My Orders</a> */}
             </nav>
 
             {/* Right Side Icons */}
