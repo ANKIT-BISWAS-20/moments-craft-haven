@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ShoppingCart, Plus } from 'lucide-react';
+import { useCart } from '../contexts/CartContext';
 
 interface ProductCardProps {
   id: number;
@@ -19,6 +20,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   image, 
   category 
 }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({ id, name, price, originalPrice, image, category });
+  };
+
+  const handleBuyNow = () => {
+    addToCart({ id, name, price, originalPrice, image, category });
+    // You could also open the cart directly here if needed
+  };
+
   return (
     <div className="bg-primary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group hover-scale">
       <div className="relative overflow-hidden">
@@ -47,11 +59,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         
         <div className="flex gap-3 mt-4">
-          <button className="flex-1 bg-tertiary text-primary py-3 px-4 rounded-lg font-semibold hover:bg-tertiary/90 transition-colors flex items-center justify-center gap-2">
+          <button 
+            onClick={handleBuyNow}
+            className="flex-1 bg-tertiary text-primary py-3 px-4 rounded-lg font-semibold hover:bg-tertiary/90 transition-colors flex items-center justify-center gap-2"
+          >
             <ShoppingCart className="w-4 h-4" />
             Buy Now
           </button>
-          <button className="border-2 border-tertiary text-tertiary p-3 rounded-lg hover:bg-tertiary hover:text-primary transition-colors">
+          <button 
+            onClick={handleAddToCart}
+            className="border-2 border-tertiary text-tertiary p-3 rounded-lg hover:bg-tertiary hover:text-primary transition-colors"
+          >
             <Plus className="w-4 h-4" />
           </button>
         </div>
