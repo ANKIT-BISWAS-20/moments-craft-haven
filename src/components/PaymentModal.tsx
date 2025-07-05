@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { X, CreditCard, Calendar, Lock, Mail, Shield } from 'lucide-react';
 import { Button } from './ui/button';
@@ -46,8 +45,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       }
     } else {
       setStep('auth');
+      setIsAuthModalOpen(true); // Automatically open auth modal
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, isOpen]);
 
   const handleAuthSuccess = () => {
     setIsAuthModalOpen(false);
@@ -55,6 +55,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       setStep('email-verify');
     } else {
       setStep('payment');
+    }
+  };
+
+  const handleAuthModalClose = () => {
+    setIsAuthModalOpen(false);
+    if (!isAuthenticated) {
+      onClose(); // Close payment modal if user cancels auth
     }
   };
 
@@ -123,20 +130,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           </div>
 
           <div className="p-6">
-            {step === 'auth' && (
-              <div className="text-center py-8">
-                <Shield className="w-16 h-16 text-tertiary mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-tertiary mb-2">Sign In to Continue</h3>
-                <p className="text-tertiary/70 mb-6">Please sign in to place your order securely</p>
-                <Button 
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className="bg-tertiary text-primary hover:bg-tertiary/90"
-                >
-                  Sign In with Phone
-                </Button>
-              </div>
-            )}
-
             {step === 'email-verify' && user?.email && (
               <div className="space-y-4">
                 <div className="text-center mb-4">
@@ -302,7 +295,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
       <AuthModal 
         isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)}
+        onClose={handleAuthModalClose}
         onSuccess={handleAuthSuccess}
       />
     </>

@@ -10,6 +10,7 @@ interface ProductCardProps {
   originalPrice?: number;
   image: string;
   category: string;
+  onBuyNow?: () => void; // Add callback for opening cart
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ 
@@ -18,7 +19,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price, 
   originalPrice, 
   image, 
-  category 
+  category,
+  onBuyNow 
 }) => {
   const { addToCart } = useCart();
 
@@ -28,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleBuyNow = () => {
     addToCart({ id, name, price, originalPrice, image, category });
-    // You could also open the cart directly here if needed
+    onBuyNow?.(); // Open cart after adding item
   };
 
   return (
